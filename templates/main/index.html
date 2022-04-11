@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quiz</title>
+</head>
+<body>
+{% if show_answer %}
+    <h1>Siz test topshirdingiz! {{ total }} balldan {{ right}} ball to'pladingiz.</h1>
+{% else %}
+<form method="post" action="">
+{% csrf_token %}
+    {% for q in questions %}
+        <h1>{{ q.question }}</h1>
+        {% for a in q.answer_set.all %}
+            <label>
+                <input type="radio" name="q{{ q.id }}" value="{{ a.id }}"/>
+                {{ a.answer }}
+            </label>
+        {% endfor %}
+    {% endfor %}
+
+    <button type="submit">Tekshirish</button>
+</form>
+{% endif %}
+</body>
+</html>
